@@ -10,7 +10,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint:js": "node_modules/.bin/eslint src/ --ext .js",
     "lint:scss": "node_modules/.bin/stylelint src/**/*.scss --syntax scss",
-    "lint": "npm run lint:js && npm run lint:scss"
+    "lint": "npm run lint:js && npm run lint:scss",
+    "precommit": "lint-staged"
   },
   "author": "Alivander",
   "license": "MIT",
@@ -25,6 +26,8 @@
     "eslint-plugin-import": "^2.12.0",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
+    "husky": "^0.14.3",
+    "lint-staged": "^7.2.0",
     "mini-css-extract-plugin": "^0.4.0",
     "node-sass": "^4.9.0",
     "postcss-flexbugs-fixes": "^3.3.1",
