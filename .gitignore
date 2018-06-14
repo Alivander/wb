@@ -9,6 +9,7 @@
 /report
 
 # production
+/dist
 /build
 /src/**/*.css
 
