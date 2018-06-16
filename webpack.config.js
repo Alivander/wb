@@ -1,5 +1,7 @@
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const PostcssFlexbugsFixes = require('postcss-flexbugs-fixes');
+const Autoprefixer = require('autoprefixer');
 
 /*
     The dependence of the main assembly on process.env.NODE_ENV
@@ -15,8 +17,8 @@ module.exports = {
                 test: /\.js$/,
                 exclude: /node_modules/,
                 use: {
-                    loader: 'babel-loader'
-                }
+                    loader: 'babel-loader',
+                },
             },
             {
                 test: /\.html$/,
@@ -24,10 +26,10 @@ module.exports = {
                     {
                         loader: 'html-loader',
                         options: {
-                            minimize: devMode ? false : true
-                        }
-                    }
-                ]
+                            minimize: !devMode,
+                        },
+                    },
+                ],
             },
             {
                 test: /\.scss$/,
@@ -37,7 +39,7 @@ module.exports = {
                         loader: 'css-loader',
                         options: {
                             importLoaders: 1,
-                            minimize: devMode ? false : true,
+                            minimize: !devMode,
                         },
                     },
                     {
@@ -45,8 +47,8 @@ module.exports = {
                         options: {
                             ident: 'postcss',
                             plugins: () => [
-                                require('postcss-flexbugs-fixes'),
-                                require('autoprefixer')({
+                                PostcssFlexbugsFixes,
+                                Autoprefixer({
                                     browsers: [
                                         '>1%',
                                         'last 4 versions',
@@ -58,19 +60,30 @@ module.exports = {
                             ],
                         },
                     },
-                    'sass-loader'
-                ]
-            }
-        ]
+                    'sass-loader',
+                ],
+            },
+            {
+                test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
+                use: [
+                    {
+                        loader: 'url-loader',
+                        options: {
+                            limit: 10240,
+                        },
+                    },
+                ],
+            },
+        ],
     },
     plugins: [
         new HtmlWebPackPlugin({
             template: './src/index.html',
-            filename: './index.html'
+            filename: './index.html',
         }),
         new MiniCssExtractPlugin({
             filename: '[name].css',
-            chunkFilename: '[id].css'
-        })
-    ]
-}
+            chunkFilename: '[id].css',
+        }),
+    ],
+};
