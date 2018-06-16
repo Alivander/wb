@@ -1,3 +1,4 @@
+const path = require('path');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const PostcssFlexbugsFixes = require('postcss-flexbugs-fixes');
@@ -71,6 +72,7 @@ module.exports = {
             },
             {
                 test: /\.(bmp|jpe?g|png|gif|svg)$/i,
+                exclude: /fonts/, // for svg fonts
                 use: [
                     {
                         loader: 'url-loader',
@@ -97,6 +99,20 @@ module.exports = {
                                     imageminSvgo(),
                                 ],
                             },
+                        },
+                    },
+                ],
+            },
+            {
+                test: /\.(svg|eot|ttf|woff|woff2)$/i,
+                include: [
+                    path.resolve(__dirname, 'src/fonts/'), // for exlude svg images
+                ],
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            outputPath: 'fonts/',
                         },
                     },
                 ],
