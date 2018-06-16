@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 const PostcssFlexbugsFixes = require('postcss-flexbugs-fixes');
 const Autoprefixer = require('autoprefixer');
 const { imageminLoader } = require('imagemin-webpack');
@@ -106,7 +107,7 @@ module.exports = {
             {
                 test: /\.(svg|eot|ttf|woff|woff2)$/i,
                 include: [
-                    path.resolve(__dirname, 'src/fonts/'), // for exlude svg images
+                    path.resolve(__dirname, 'src/static/fonts/'), // for exlude svg images
                 ],
                 use: [
                     {
@@ -120,6 +121,7 @@ module.exports = {
         ],
     },
     plugins: [
+        new CleanWebpackPlugin('dist'),
         new HtmlWebPackPlugin({
             template: './src/index.html',
             filename: './index.html',
@@ -129,7 +131,7 @@ module.exports = {
             chunkFilename: '[id].css',
         }),
         new FaviconsWebpackPlugin({
-            logo: './src/favicon.png',
+            logo: './src/static/favicon.png',
             background: 'rgba(255, 255, 255, 0)',
             icons: {
                 android: true,

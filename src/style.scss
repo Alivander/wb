@@ -1,0 +1,44 @@
+@font-face {
+    font-family: "Sample Font";
+    font-weight: 400;
+    font-style: normal;
+    src:
+        local("Sample_Font"),
+        url("./static/fonts/font.svg") format("svg");
+    font-display: swap;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    min-height: 100vh;
+    margin: 0;
+    padding: 0 40px;
+
+    color: white;
+
+    & .page {
+        display: flex;
+
+        padding: 20px;
+
+        border-radius: 5px;
+        background-color: gray;
+
+        &::before {
+            display: block;
+            overflow: hidden;
+
+            width: 75px;
+            height: 75px;
+
+            margin-right: 20px;
+
+            content: url('./image.jpg');
+
+            border-radius: 5px;
+        }
+    }
+}
