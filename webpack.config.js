@@ -7,6 +7,7 @@ const imageminGifsicle = require('imagemin-gifsicle');
 const imageminMozjpeg = require('imagemin-mozjpeg');
 const imageminOptipng = require('imagemin-optipng');
 const imageminSvgo = require('imagemin-svgo');
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 
 /*
     The dependence of the main assembly on process.env.NODE_ENV
@@ -110,6 +111,22 @@ module.exports = {
         new MiniCssExtractPlugin({
             filename: '[name].css',
             chunkFilename: '[id].css',
+        }),
+        new FaviconsWebpackPlugin({
+            logo: './src/favicon.png',
+            background: 'rgba(255, 255, 255, 0)',
+            icons: {
+                android: true,
+                appleIcon: true,
+                appleStartup: true,
+                coast: false,
+                favicons: true,
+                firefox: true,
+                opengraph: false,
+                twitter: false,
+                yandex: false,
+                windows: false,
+            },
         }),
     ],
 };
