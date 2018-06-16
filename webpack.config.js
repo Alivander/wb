@@ -2,6 +2,11 @@ const HtmlWebPackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const PostcssFlexbugsFixes = require('postcss-flexbugs-fixes');
 const Autoprefixer = require('autoprefixer');
+const { imageminLoader } = require('imagemin-webpack');
+const imageminGifsicle = require('imagemin-gifsicle');
+const imageminMozjpeg = require('imagemin-mozjpeg');
+const imageminOptipng = require('imagemin-optipng');
+const imageminSvgo = require('imagemin-svgo');
 
 /*
     The dependence of the main assembly on process.env.NODE_ENV
@@ -46,7 +51,7 @@ module.exports = {
                         loader: 'postcss-loader',
                         options: {
                             ident: 'postcss',
-                            plugins: () => [
+                            plugins: [
                                 PostcssFlexbugsFixes,
                                 Autoprefixer({
                                     browsers: [
@@ -64,12 +69,33 @@ module.exports = {
                 ],
             },
             {
-                test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
+                test: /\.(bmp|jpe?g|png|gif|svg)$/i,
                 use: [
                     {
                         loader: 'url-loader',
                         options: {
                             limit: 10240,
+                        },
+                    },
+                    {
+                        loader: imageminLoader,
+                        options: {
+                            cache: true,
+                            bail: false,
+                            imageminOptions: {
+                                plugins: [
+                                    imageminGifsicle({
+                                        interlaced: true,
+                                        optimizationLevel: 3,
+                                    }),
+                                    imageminMozjpeg({
+                                        progressive: true,
+                                        quality: 90,
+                                    }),
+                                    imageminOptipng(),
+                                    imageminSvgo(),
+                                ],
+                            },
                         },
                     },
                 ],
