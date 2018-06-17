@@ -3,10 +3,10 @@
 ```
 npm i
 
-npm start __//build and start local server__
-npm run build __//build in production mode__
+npm start _//build and start local server_
+npm run build _//build in production mode_
 
-npm run lint __//linting test__
+npm run lint _//linting test_
 ```
 
 Create project using:
